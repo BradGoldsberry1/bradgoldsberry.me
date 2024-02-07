@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.13.0/css/ol.css" type="text/css">
+    <style>
+      .map {
+        height: 594px;
+        width: 100%;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.13.0/build/ol.js"></script>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1">
+	<title>SEPTR - Run Illinois</title>
+	<meta name="description" content="Run Illinois - Sports Engineering, Performance, Testing, and Research" />
+	<meta name="keywords" content="Run, Illinois, Sports Engineering, Performance, Testing, and Research" />
+	<meta name="author" content="SEPTR" />
+	<link rel="shortcut icon" href="images/BG Logo.jpg">
+	<meta name="msapplication-TileColor" content="#00a8ff">
+	<meta name="theme-color" content="#483a88">
+
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Google Webfonts -->
+	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,700' rel='stylesheet' type='text/css'>
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="../css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="../css/icomoon.css">
+	<!-- Simple Line Icons-->
+	<link rel="stylesheet" href="../css/simple-line-icons.css">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="../css/magnific-popup.css">
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+	<!-- Salvattore -->
+	<!-- <link rel="stylesheet" href="css/salvattore.css"> -->
+	<!-- Theme Style -->
+	<link rel="stylesheet" href="../css/style.css">
+	<!-- Modernizr JS -->
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="scrolled">
+
+
+	<div class="se-pre-con">
+		<div class="text-center">
+			<img src="../images/loader.gif" />
+		</div>
+	</div>
+
+	<h2>Run Illinois</h2>
+    <div id="map" class="map"></div>
+    <div class="popup" id="popup" class="ol-popup">
+	     <div id="popup-content">
+	     	<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button"  id="popup-closer" class="close ol-popup-closer" data-dismiss="popup">&times;</button>
+						<h4 class="modal-title"><i class="icon-video-camera"></i></h4>
+					</div>
+					<div class="modal-body" style="padding: 0px;">
+						<div class="youtubeModalDiv">
+							<iframe id='popupIFrame' src='https://www.youtube.com/embed/4Ox2ZyVg6GE?rel=0&showinfo=0&modestbranding=1' width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+	     </div>
+	 </div>
+    <script type="text/javascript">
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([-87.6298, 41.8781]),
+          zoom: 9
+        })
+      });
+      var iconStyle = new ol.style.Style({
+                image: new ol.style.Icon(({
+                    scale: 0.05,
+                    offset: [0, 0],
+                    //anchor: [0.5, 1],                    
+                    src: "../images/blueCircle.png",
+                    opacity: 0.8
+                }))
+            }); 
+      var iconStyleSmaller = new ol.style.Style({
+                image: new ol.style.Icon(({
+                    scale: 0.03,
+                    offset: [0, 0],
+                    //anchor: [0.5, 1],                    
+                    src: "../images/blueCircle.png",
+                    opacity: 0.8
+                }))
+            });
+      var ChicagoLoop = new ol.layer.Vector({
+	     source: new ol.source.Vector({
+	         features: [
+	             new ol.Feature({
+	                 geometry: new ol.geom.Point(ol.proj.fromLonLat([-87.6188, 41.8722]))
+	             })
+	         ]
+	     }),
+	     style: function(feature, resolution) {
+		        return iconStyle;
+		    }
+	 });
+      var SidneyYates = new ol.layer.Vector({
+	     source: new ol.source.Vector({
+	         features: [
+	             new ol.Feature({
+	                 geometry: new ol.geom.Point(ol.proj.fromLonLat([-87.7767, 41.9998]))
+	             })
+	         ]
+	     }),
+	     style: function(feature, resolution) {
+		        return iconStyleSmaller;
+		    }
+	 });
+      var LaBaghWoods = new ol.layer.Vector({
+	     source: new ol.source.Vector({
+	         features: [
+	             new ol.Feature({
+	                 geometry: new ol.geom.Point(ol.proj.fromLonLat([-87.7450, 41.9806]))
+	             })
+	         ]
+	     }),
+	     style: function(feature, resolution) {
+		        return iconStyleSmaller;
+		    }
+	 });
+      var CubaMarsh = new ol.layer.Vector({
+	     source: new ol.source.Vector({
+	         features: [
+	             new ol.Feature({
+	                 geometry: new ol.geom.Point(ol.proj.fromLonLat([-88.1125774, 42.1703027]))
+	             })
+	         ]
+	     }),
+	     style: function(feature, resolution) {
+		        return iconStyle;
+		    }
+	 });
+	 map.addLayer(ChicagoLoop);
+	 map.addLayer(SidneyYates);
+	 map.addLayer(LaBaghWoods);
+	 map.addLayer(CubaMarsh);
+	 var container = document.getElementById('popup');
+	 var content = document.getElementById('popup-content');
+	 var closer = document.getElementById('popup-closer');
+
+	 var overlay = new ol.Overlay({
+	     element: container,
+	     autoPan: true,
+	     autoPanAnimation: {
+	         duration: 250
+	     }
+	 });
+	 map.addOverlay(overlay);
+
+	 closer.onclick = function() {
+	     overlay.setPosition(undefined);
+	     closer.blur();
+	     return false;
+	 };
+	 map.on('singleclick', function (event) {
+     if (map.hasFeatureAtPixel(event.pixel) === true) {
+	         var coordinate = event.coordinate;
+	         var lon = ol.proj.transform(event.coordinate, 'EPSG:3857', 'EPSG:4326')[0];
+	         var lat = ol.proj.transform(event.coordinate, 'EPSG:3857', 'EPSG:4326')[1];
+	         console.log(lon)
+	         console.log(lat)
+	         if (lon <= -87.76 && lon / 100 >= -87.79 && lat <= 42.01 && lat >= 41.99)  {
+	         	document.getElementById('popupIFrame').src = 'https://www.youtube.com/embed/HIb9E_wjJCg?rel=0&showinfo=0&modestbranding=1'; 
+	         } // Sidney Yates Flatwoods -87.7767, 41.9998
+
+	         // Next add check for LaBagh Woods
+	         else if (lon <= -87.73 && lon >= -87.76 && Math.round(lat * 100) / 100 <= 41.995 && Math.round(lat * 100) / 100 >= 41.97)  {
+	         	document.getElementById('popupIFrame').src = 'https://www.youtube.com/embed/jgBf0MNsvLQ?rel=0&showinfo=0&modestbranding=1'; 
+	         } // LaBagh Woods
+
+	         // Next add check for Cuba Marsh FP -88.1125774, 42.1703027
+	         else if (lon <= -88.0 && lon >= -88.22 && Math.round(lat * 100) / 100 <= 42.18 && Math.round(lat * 100) / 100 >= 42.16)  {
+	         	document.getElementById('popupIFrame').src = 'https://www.youtube.com/embed/T6I1KKEU7ig?rel=0&showinfo=0&modestbranding=1'; 
+	         } // Cuba Marsh FP
+
+	         // Next add check for Chicago Loop -87.6188, 41.8722
+	         else if (lon <= -87.6 && lon / 100 >= -87.63 && lat <= 41.88 && lat >= 41.86)  {
+	         	document.getElementById('popupIFrame').src = 'https://www.youtube.com/embed/4Ox2ZyVg6GE?rel=0&showinfo=0&modestbranding=1'; 
+	         } // Chicago Loop
+	         // overlay.setPosition(map.getView().getCenter());
+	         console.log(coordinate)
+	         overlay.setPosition(coordinate);
+	     } else {
+	         overlay.setPosition(undefined);
+	         closer.blur();
+	     }
+	 });
+	 map.on("pointermove", function (evt) {
+	    var hit = this.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
+	        return true;
+	    }); 
+	    if (hit) {
+	        this.getTargetElement().style.cursor = 'pointer';
+	    } else {
+	        this.getTargetElement().style.cursor = '';
+	    }
+	});
+    </script>
+		
+	<div id="fh5co-offcanvass">
+<!-- 		<ul>
+			<li class="active"><a href="#" data-nav-section="home">Home</a></li>
+			<li><a href="http://mitathletics.com/sports/m-footbl/2014-15/bios/goldsberry_brad_8520" target="_blank">MIT Career</a></li>
+			<li><a href="#" data-toggle="modal" data-target="#youtubeModal">MIT Highlights</a></li>
+			<li><a href="https://www.9news.com/article/sports/meet-a-colorado-player-on-mits-undefeated-football-team/73-249930445" target="_blank">9-News Feature</a></li>
+			<li><a href="https://www.youtube.com/watch?v=17hpqjkawkc" target="_blank">9-News Video</a></li>
+			<li><a href="https://www.cbsnews.com/video/revenge-of-the-nerds-mit-football-team-undefeated-in-historic-run/" target="_blank">Revenge of the Nerds</a></li>
+		</ul> -->
+		<h3 class="fh5co-lead">Connect with us!</h3>
+<!-- 		<p class="fh5co-social-icons">
+			<a href="http://twitter.com/bradgoldsberry" target="_blank"><i class="icon-twitter"></i></a>
+			<a href="http://facebook.com/bradgoldsberry.7" target="_blank"><i class="icon-facebook"></i></a>
+			<a href="https://www.linkedin.com/in/brad-goldsberry-25006737/" target="_blank"><i class="icon-linkedin"></i></a>
+		</p> -->
+		<a href="#" target="_top"><span>Run Illinois</span></a>
+		<a href="tel:720-598-2723">720.598.2723</a>
+	</div>
+	
+	<div id="fh5co-menu" class="navbar scrolled">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#fh5co-navbar" aria-expanded="false" aria-controls="navbar"> <i></i></a>
+					<a href="#" target="_top" class="navbar-brand"><span>Run Illinois</span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+
+
+	<!-- jQuery -->
+	<script src="../js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="../js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="../js/jquery.waypoints.min.js"></script>
+	<!-- Magnific Popup -->
+	<script src="../js/jquery.magnific-popup.min.js"></script>
+	<!-- Owl Carousel -->
+	<script src="../js/owl.carousel.min.js"></script>
+	<!-- toCount -->
+	<script src="../js/jquery.countTo.js"></script>
+	<!-- Main JS -->
+	<script src="../js/main.js"></script>
+
+	
+
+	
+	</body>
+</html>
